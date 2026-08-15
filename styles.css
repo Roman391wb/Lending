@@ -846,10 +846,10 @@ h3 {
 }
 
 .case-media img {
-    width: min(100%, 340px);
+    width: 100%;
+    max-width: 100%;
     height: auto;
     display: block;
-    object-fit: contain;
     border-radius: var(--radius);
 }
 
@@ -1285,10 +1285,6 @@ h3 {
 
     .case-media {
         padding: 10px;
-    }
-
-    .case-media img {
-        width: min(100%, 240px);
     }
 
     .badge {
