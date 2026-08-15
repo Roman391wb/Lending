@@ -35,7 +35,6 @@ body {
         radial-gradient(circle at 86% 12%, rgba(8, 168, 255, 0.16), transparent 26rem),
         linear-gradient(180deg, #ffffff 0%, var(--bg) 34%, #ffffff 100%);
     line-height: 1.55;
-    overflow-x: hidden;
 }
 
 body.menu-open {
@@ -44,6 +43,10 @@ body.menu-open {
 
 a {
     color: inherit;
+}
+
+img {
+    max-width: 100%;
 }
 
 button,
@@ -80,10 +83,13 @@ textarea {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    flex: 0 0 auto;
     text-decoration: none;
     font-size: 1.05rem;
     font-weight: 850;
     letter-spacing: 0;
+    line-height: 1;
+    white-space: nowrap;
 }
 
 .logo span,
@@ -162,6 +168,7 @@ textarea {
 
 section {
     padding: 96px 0;
+    scroll-margin-top: calc(var(--header-h) + 18px);
 }
 
 .hero {
@@ -194,7 +201,7 @@ h1,
 h2,
 h3,
 p {
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
 }
 
 h1 {
@@ -234,6 +241,7 @@ h3 {
 
 .btn {
     min-height: 52px;
+    max-width: 100%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -242,6 +250,9 @@ h3 {
     border: 1px solid transparent;
     border-radius: var(--radius);
     font-weight: 850;
+    line-height: 1.15;
+    text-align: center;
+    overflow-wrap: break-word;
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
@@ -386,8 +397,9 @@ h3 {
 .metric-row,
 .unit-line {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    gap: 16px;
+    gap: 6px 16px;
     padding: 12px 0;
     border-top: 1px solid var(--line);
 }
@@ -457,6 +469,22 @@ h3 {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 16px;
+}
+
+.hero-grid > *,
+.cards-grid > *,
+.timeline > *,
+.program-grid > *,
+.placeholder-grid > *,
+.reviews-grid > *,
+.process-grid > *,
+.tariffs-grid > *,
+.calculator-shell > *,
+.calculator-form > *,
+.calculator-results > *,
+.cta-grid > *,
+.footer-grid > * {
+    min-width: 0;
 }
 
 .program-grid {
@@ -610,6 +638,7 @@ h3 {
 .contact-form label {
     display: grid;
     gap: 8px;
+    min-width: 0;
     color: var(--ink);
     font-weight: 800;
     font-size: 0.92rem;
@@ -780,7 +809,7 @@ h3 {
 
 .case-card-ready {
     display: grid;
-    gap: 18px;
+    gap: 16px;
 }
 
 .case-card-ready > i {
@@ -788,10 +817,11 @@ h3 {
 }
 
 .case-media {
-    min-height: 220px;
+    min-height: 0;
     display: grid;
     place-items: center;
     gap: 10px;
+    padding: 12px;
     border: 1px dashed rgba(124, 44, 255, 0.35);
     border-radius: var(--radius);
     color: var(--violet-deep);
@@ -816,11 +846,10 @@ h3 {
 }
 
 .case-media img {
-    width: 100%;
-    height: 100%;
-    min-height: 260px;
+    width: min(100%, 340px);
+    height: auto;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: var(--radius);
 }
 
@@ -999,6 +1028,16 @@ h3 {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: nowrap;
+    margin-bottom: 14px;
+    font-size: clamp(1.35rem, 3vw, 1.75rem);
+    line-height: 1;
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+.footer h2 span {
+    flex: 0 0 38px;
 }
 
 .footer p,
@@ -1073,11 +1112,12 @@ h3 {
 
     .nav-menu {
         position: fixed;
-        left: 18px;
-        right: 18px;
+        left: max(12px, env(safe-area-inset-left));
+        right: max(12px, env(safe-area-inset-right));
         top: calc(var(--header-h) + 8px);
-        max-height: calc(100vh - var(--header-h) - 24px);
+        max-height: calc(100dvh - var(--header-h) - 24px);
         overflow-y: auto;
+        overscroll-behavior: contain;
         display: grid;
         gap: 6px;
         padding: 14px;
@@ -1103,6 +1143,25 @@ h3 {
         align-items: center;
         padding: 12px 14px;
     }
+
+    .calculator-shell,
+    .calculator-form,
+    .calculator-results {
+        grid-template-columns: 1fr;
+    }
+
+    .calculator-shell {
+        gap: 14px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+    }
+
+    .footer-grid > div:first-child {
+        grid-column: 1 / -1;
+    }
 }
 
 @media (max-width: 720px) {
@@ -1120,16 +1179,32 @@ h3 {
 
     section,
     .hero {
-        padding: 66px 0;
+        padding: 58px 0;
     }
 
     h1 {
-        font-size: clamp(2.18rem, 12vw, 3.4rem);
-        line-height: 1;
+        font-size: clamp(2rem, 10.8vw, 3.25rem);
+        line-height: 1.04;
     }
 
     h2 {
-        font-size: clamp(1.85rem, 9vw, 2.7rem);
+        font-size: clamp(1.65rem, 8vw, 2.45rem);
+        line-height: 1.08;
+    }
+
+    h3 {
+        font-size: clamp(1.05rem, 4.8vw, 1.18rem);
+    }
+
+    .eyebrow {
+        font-size: 0.76rem;
+        letter-spacing: 0.06em;
+    }
+
+    .hero-subtitle,
+    .section-head p:not(.eyebrow),
+    .cta-grid > div > p:not(.eyebrow) {
+        font-size: 1rem;
     }
 
     .hero-actions,
@@ -1150,10 +1225,13 @@ h3 {
 
     .hero-actions {
         display: grid;
+        gap: 10px;
     }
 
     .btn {
         width: 100%;
+        min-height: 50px;
+        padding: 13px 16px;
     }
 
     .hero-visual {
@@ -1200,6 +1278,26 @@ h3 {
         padding: 14px;
     }
 
+    .placeholder-card,
+    .case-card-ready {
+        gap: 14px;
+    }
+
+    .case-media {
+        padding: 10px;
+    }
+
+    .case-media img {
+        width: min(100%, 240px);
+    }
+
+    .badge {
+        position: static;
+        width: fit-content;
+        max-width: 100%;
+        margin-bottom: 2px;
+    }
+
     .result-card span {
         min-height: auto;
     }
@@ -1211,6 +1309,14 @@ h3 {
     .consultation-card .btn {
         width: 100%;
         white-space: normal;
+    }
+
+    .footer {
+        padding: 36px 0;
+    }
+
+    .footer h2 {
+        font-size: clamp(1.28rem, 7vw, 1.55rem);
     }
 }
 
@@ -1234,6 +1340,8 @@ h3 {
     .review-card,
     .process-grid article,
     .tariff-card,
+    .result-card,
+    .status-card,
     .contact-form,
     .consultation-card {
         padding: 18px;
@@ -1241,5 +1349,78 @@ h3 {
 
     .hero-visual {
         min-height: auto;
+    }
+}
+
+@media (max-width: 340px) {
+    :root {
+        --header-h: 64px;
+    }
+
+    .container {
+        width: min(100% - 20px, 1160px);
+    }
+
+    .navbar {
+        width: min(100% - 20px, 1220px);
+        gap: 10px;
+    }
+
+    .logo {
+        gap: 6px;
+        font-size: 0.92rem;
+    }
+
+    .logo span,
+    .footer h2 span {
+        width: 32px;
+        height: 32px;
+        flex-basis: 32px;
+        font-size: 0.88rem;
+    }
+
+    section,
+    .hero {
+        padding: 48px 0;
+    }
+
+    h1 {
+        font-size: clamp(1.82rem, 10.2vw, 2.2rem);
+    }
+
+    h2 {
+        font-size: clamp(1.48rem, 7.4vw, 1.9rem);
+    }
+
+    .hero-subtitle,
+    .hero-note,
+    .section-head p:not(.eyebrow),
+    .info-card p,
+    .program-card p,
+    .placeholder-card p,
+    .review-card p,
+    .process-grid p,
+    .tariff-card li,
+    .faq-answer p,
+    .calculator-note,
+    .form-note {
+        font-size: 0.94rem;
+    }
+
+    .info-card,
+    .program-card,
+    .placeholder-card,
+    .review-card,
+    .process-grid article,
+    .tariff-card,
+    .result-card,
+    .status-card,
+    .contact-form,
+    .consultation-card {
+        padding: 16px;
+    }
+
+    .footer h2 {
+        font-size: 1.22rem;
     }
 }
